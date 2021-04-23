@@ -1,38 +1,55 @@
 import './App.css';
 import Axios from 'axios'
+import Loading from './components/loading'
+import Fibonacci from './components/fibonacci'
+import Fail from './components/fail'
+import React, { useState, useEffect } from 'react';
 
 document.title = 'Fibonacci';
 function App() {
-  let numero_entrada = 0
+  
+  let formData = new FormData();
+  formData.append('email', "aris.osorio@alumnos.udg.mx")
+  formData.append('password', "Monkeydluffy26")
+  const [window, setWindow] = useState(["loading"]);
+  let page = '';
 
-  const fibonacci = () => {
-    Axios.post(`http://127.0.0.1:8000/resultados`,
-        {
-            numero_entrada: numero_entrada.value,
-        }).then(res => {
-            console.log(res);
-            //toast.info('Welcome to Simple Task')
+  useEffect(() => {
+    if(window[0]=== "loading")
+    {
+      Axios.post(
+        `https://fibonacci-aris.herokuapp.com/usuarios/login/`,
+        formData,
+          {
+            headers: {
+              //"Authorization": "YOUR_API_AUTHORIZATION_KEY_SHOULD_GOES_HERE_IF_HAVE",
+              "Content-type": "multipart/form-data",
+            },                    
+          }
+      ).then(res => {
+          setWindow(["fibonacci", res["data"]])
+          console.log(res);
         }).catch((error) => {
+          setWindow(["fail"])
             console.log(error)
-            //toast.error('Failed to login')
         });
-  }
+    }
+  });
 
+  if(window[0] === "loading")
+  {
+    page = <Loading /> 
+  }
+  if(window[0] === "fibonacci")
+  {
+    page = <Fibonacci token={window[1]} /> 
+  }
+  if(window[0] === "fail")
+  {
+    page = <Fail />
+  }
   return (
-      <div className="vh-100 bg-fibonacci bg-dark d-flex justify-content-center d-flex align-items-center">
-          <div className="bg-white p-4 rounded shadow">
-            <div className="form-group">
-              <label htmlFor="numero-entrada">Numero de entrada</label>
-              <input type="text" className="form-control" id="numero-entrada" min="0" step="1" ref={txt => numero_entrada = txt}/>
-              <small id="numero-entrada-help" className="form-text text-muted">Solo numeros enteros y positivos</small>
-            </div>
-            <button type="submit" className="btn btn-primary mb-2 btn-block" onClick={fibonacci}>Enviar</button>
-            <div className="form-group">
-              <label htmlFor="exampleFormControlTextarea1">Secuencia</label>
-              <textarea className="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
-            </div>
-          </div>
-      </div>
+      page
   );
 }
 
