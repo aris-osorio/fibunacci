@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 
 
 export default function Fibonacci(props) {
@@ -13,12 +14,14 @@ export default function Fibonacci(props) {
         let textarea = document.getElementById("exampleFormControlTextarea1")
         let label = document.getElementById("numero-entrada-help")
         let txt = document.getElementById("numero-entrada").value
+        let spiner = document.getElementById("spiner")
         let dat = txt.includes(".")
 
         if(txt.length !== 0 && txt >= 0 && dat === false)
         {
             label.classList.remove("red")
             label.classList.add("text-muted")
+            spiner.classList.remove("invisible")
 
             formData.append("numero_entrada", numero_entrada.value)
             let token = "Token "+ props.token
@@ -37,8 +40,10 @@ export default function Fibonacci(props) {
               }
           ).then(res => {
                 textarea.value = res.data["secuencia"]
+                spiner.classList.add("invisible")
             }).catch((error) => {
                 textarea.value = error
+                spiner.classList.add("invisible")
             });
         }
         else
@@ -54,14 +59,19 @@ export default function Fibonacci(props) {
         <div className="vh-100 bg-fibonacci bg-dark d-flex justify-content-center d-flex align-items-center">
           <div className="bg-white p-4 rounded shadow">
             <div className="form-group">
-               <p className="display-4">Serie de Fibonacci</p>
+              <p className="display-4">Serie de Fibonacci</p>
               <label htmlFor="numero-entrada">Numero de entrada</label>
               <input type="number" className="form-control" id="numero-entrada" min="0" step="1" ref={txt => numero_entrada = txt}/>
               <small id="numero-entrada-help" className="form-text text-muted">Solo numeros enteros y positivos</small>
             </div>
             <button type="submit" className="btn btn-dark mb-2 btn-block" onClick={obtenerFibonacci}>Enviar</button>
             <div className="form-group">
-              <label htmlFor="exampleFormControlTextarea1">Secuencia</label>
+              <div className="d-flex">
+                <label htmlFor="exampleFormControlTextarea1">Secuencia&nbsp;</label>
+                <div className="invisible" id="spiner">
+                    <ClipLoader  color="#0A0A0A" size="12"/>
+                </div>
+              </div>
               <textarea className="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
             </div>
           </div>
