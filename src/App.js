@@ -28,10 +28,8 @@ function App() {
           }
       ).then(res => {
           setWindow(["fibonacci", res["data"]])
-          console.log(res);
         }).catch((error) => {
           setWindow(["fail"])
-            console.log(error)
         });
     }
   });

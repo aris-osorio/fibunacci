@@ -5,3 +5,7 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+#exampleFormControlTextarea1 
+{
+  resize: none;
+}
