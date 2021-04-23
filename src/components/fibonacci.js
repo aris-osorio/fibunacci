@@ -50,7 +50,7 @@ export default function Fibonacci(props) {
             <button type="submit" className="btn btn-dark mb-2 btn-block" onClick={obtenerFibonacci}>Enviar</button>
             <div className="form-group">
               <label htmlFor="exampleFormControlTextarea1">Secuencia</label>
-              <textarea className="form-control" id="exampleFormControlTextarea1" rows="6" readonly></textarea>
+              <textarea className="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
             </div>
           </div>
       </div>
