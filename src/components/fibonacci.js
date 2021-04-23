@@ -12,7 +12,7 @@ export default function Fibonacci(props) {
     const obtenerFibonacci =()=> {
         let txt = document.getElementById("numero-entrada").value
 
-        if(txt.length !== 0)
+        if(txt.length !== 0 && txt >= 0)
         {
             formData.append("numero_entrada", numero_entrada.value)
             let token = "Token "+ props.token
