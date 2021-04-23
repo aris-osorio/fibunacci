@@ -10,11 +10,16 @@ export default function Fibonacci(props) {
         document.getElementById("exampleFormControlTextarea1").readOnly = true
     });
     const obtenerFibonacci =()=> {
+        let textarea = document.getElementById("exampleFormControlTextarea1")
+        let label = document.getElementById("numero-entrada-help")
         let txt = document.getElementById("numero-entrada").value
         let dat = txt.includes(".")
 
         if(txt.length !== 0 && txt >= 0 && dat === false)
         {
+            label.classList.remove("red")
+            label.classList.add("text-muted")
+
             formData.append("numero_entrada", numero_entrada.value)
             let token = "Token "+ props.token
             Axios.post(
@@ -31,10 +36,16 @@ export default function Fibonacci(props) {
                 },                    
               }
           ).then(res => {
-              document.getElementById("exampleFormControlTextarea1").value = res.data["secuencia"]
+                textarea.value = res.data["secuencia"]
             }).catch((error) => {
-                document.getElementById("exampleFormControlTextarea1").value = error
+                textarea.value = error
             });
+        }
+        else
+        {
+            label.classList.remove("text-muted")
+            label.classList.add("red")
+            textarea.value = ""
         }  
        
     }
