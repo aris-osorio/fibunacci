@@ -5,11 +5,13 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
-#exampleFormControlTextarea1 
-{
-  resize: none;
-}
 .red
 {
   color: #7c0414!important;
+}
+#numero-entrada:focus, #exampleFormControlTextarea1:focus
+{
+  box-shadow: 0 0 0 0.2rem rgba(168,171,174,255)!important;
+  border: 1px solid rgb(0, 0, 0)!important;
+  resize: none;
 }
